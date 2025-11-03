@@ -2,6 +2,12 @@
 
 A modern React application built with TypeScript, featuring authentication, product management, Rick and Morty character explorer, and file upload functionality.
 
+## 🚀 Live Demo
+
+**[View Live Application](https://victor-vergarareact-test.onrender.com/)**
+
+> **Note:** The live demo is hosted on Render's free tier, so it may take a moment to load on first visit.
+
 ## Tech Stack
 
 - **React** 19.2.0
