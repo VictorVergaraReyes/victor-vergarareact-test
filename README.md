@@ -22,8 +22,7 @@ A modern React application built with TypeScript, featuring authentication, prod
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd prueba-tecnica
+git clone https://github.com/VictorVergaraReyes/victor-vergarareact-test
 ```
 
 ### 2. Install Dependencies
@@ -34,11 +33,11 @@ npm install
 
 ### 3. Environment Variables
 
-This project doesn't require any environment variables for basic functionality. However, if you need to configure any in the future, create a `.env` file in the root directory:
+Create a `.env` file in the root directory:
 
 ```bash
-# Example .env file (not required for this project)
-# REACT_APP_API_URL=https://api.example.com
+# Example .env file 
+# REACT_APP_ENCRYPTION_KEY=applepie
 ```
 
 ### 4. Run the Application
