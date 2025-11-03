@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import CharacterCard from './characterCard';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink } from "@/components/ui/pagination";
 import { Character } from '@/types/rickMortyTypes';  
 
 
@@ -86,22 +86,49 @@ function CharacterList() {
       )}
 
       {/* Paginación */}
-      <div className="flex justify-center gap-2">
-        <Button
-          variant="outline"
-          onClick={() => setPage(p => Math.max(1, p - 1))}
-          disabled={page === 1}
-        >
-          Anterior
-        </Button>
-        <span className="flex items-center px-4">Página {page}</span>
-        <Button
-          variant="outline"
-          onClick={() => setPage(p => p + 1)}
-        >
-          Siguiente
-        </Button>
-      </div>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage(p => Math.max(1, p - 1));
+              }}
+              className={page === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+            />
+          </PaginationItem>
+          {[...Array(5)].map((_, index) => {
+            const pageNumber = page - 2 + index;
+            if (pageNumber < 1) return null;
+            return (
+              <PaginationItem key={pageNumber}>
+                <PaginationLink
+                  href="#"
+                  isActive={pageNumber === page}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(pageNumber);
+                  }}
+                  className="cursor-pointer"
+                >
+                  {pageNumber}
+                </PaginationLink>
+              </PaginationItem>
+            );
+          })}
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage(p => p + 1);
+              }}
+              className="cursor-pointer"
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
