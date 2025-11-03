@@ -10,6 +10,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { useAuthStore } from "@/stores/loginStore"
 
 type LoginFormData = {
   email: string
@@ -21,6 +23,9 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
+
   const {
     register,
     handleSubmit,
@@ -28,7 +33,14 @@ export function LoginForm({
   } = useForm<LoginFormData>()
 
   const onSubmit = (data: LoginFormData) => {
-    console.log(data)
+    // Generate a mock token for demonstration
+    const mockToken = btoa(`${data.email}:${Date.now()}`)
+
+    // Call login action from store
+    login(data.email, mockToken)
+
+    // Redirect to products page
+    navigate("/products")
   }
 
   return (

@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import { Products } from './pages/Products';
 import Upload from './pages/Upload';
+import NotFound from './pages/NotFound';
+import { PrivateRoute } from './components/PrivateRoute';
 
 function App(): React.JSX.Element {
   return (
@@ -19,10 +21,32 @@ function App(): React.JSX.Element {
       </nav>
       {/* Rutas */}
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/products" element={<Products />} />
-        <Route path='/upload' element={<Upload />}/>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <Products />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <PrivateRoute>
+              <Upload />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
   );
