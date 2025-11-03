@@ -2,6 +2,7 @@ import { Routes, Route, Link, HashRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { Products } from './pages/Products';
+import Upload from './pages/Upload';
 
 function App(): React.JSX.Element {
   return (
@@ -22,6 +23,7 @@ function App(): React.JSX.Element {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Products />} />
+        <Route path='/upload' element={<Upload />}/>
       </Routes>
     </HashRouter>
   );
