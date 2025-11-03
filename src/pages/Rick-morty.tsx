@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import CharacterList from '@/components/characterList';
-import CharacterDialog from '@/components/characterDialog';
+import CharacterList from '@/components/character/characterList';
+import CharacterDialog from '@/components/character/characterDialog';
 import { Character } from '@/types/rickMortyTypes';
 
 function Characters() {
@@ -33,7 +33,6 @@ function Characters() {
 
       {/* Main Content */}
       <main>
-        {/* <CharacterList onViewDetails={handleViewDetails} /> */}
         <CharacterList />
       </main>
 
