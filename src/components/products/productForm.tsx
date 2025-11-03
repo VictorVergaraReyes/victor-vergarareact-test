@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 type ProductFormData = {
   titulo: string;
@@ -13,6 +16,8 @@ type ProductFormData = {
 };
 
 function ProductForm() {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -20,10 +25,42 @@ function ProductForm() {
     reset
   } = useForm<ProductFormData>();
 
-  const onSubmit = (data: ProductFormData) => {
-    console.log("Datos del formulario:", data);    
-    alert("Formulario enviado con éxito");
-    reset();
+  const onSubmit = async (data: ProductFormData) => {
+    setLoading(true);
+
+    try {
+      const response = await fetch('https://fakestoreapi.com/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: data.titulo,
+          price: parseFloat(data.precio),
+          description: data.descripcion,
+          image: data.imagen,
+          category: 'general'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al crear el producto');
+      }
+
+      const result = await response.json();
+      console.log("Producto creado:", result);
+      toast.success('Producto creado exitosamente', {
+        description: `ID del producto: ${result.id}`
+      });
+      reset();
+    } catch (err) {
+      console.error("Error:", err);
+      toast.error('Error al crear el producto', {
+        description: err instanceof Error ? err.message : 'Error al enviar el formulario'
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,7 +84,7 @@ function ProductForm() {
                 {...register("titulo", {
                   required: "El título es requerido",
                   pattern: {
-                    value: /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]+$/,
+                    value: /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]+$/,
                     message: "El título solo puede contener letras"
                   },
                   minLength: {
@@ -93,7 +130,7 @@ function ProductForm() {
                 {...register("descripcion", {
                   required: "La descripción es requerida",
                   pattern: {
-                    value: /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]+$/,
+                    value: /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s\.,\-\:]+$/,
                     message: "La descripción solo puede contener letras y signos de puntuación"
                   },
                   minLength: {
@@ -133,11 +170,19 @@ function ProductForm() {
                 type="button"
                 variant="outline"
                 onClick={() => reset()}
+                disabled={loading}
               >
                 Limpiar
               </Button>
-              <Button type="submit">
-                Guardar Producto
+              <Button type="submit" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Guardando...
+                  </>
+                ) : (
+                  'Guardar Producto'
+                )}
               </Button>
             </div>
           </form>

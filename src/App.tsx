@@ -7,10 +7,12 @@ import Characters from './pages/Rick-morty';
 import Upload from './pages/Upload';
 import NotFound from './pages/NotFound';
 import { PrivateRoute } from './components/PrivateRoute';
+import { Toaster } from '@/components/ui/sonner';
 
 function App(): React.JSX.Element {
   return (
     <HashRouter>
+      <Toaster />
       <nav className="bg-blue-600 text-white p-4 shadow-lg">
         <div className="flex gap-4">
           <Link to="/" className="hover:text-blue-200 transition-colors">
