@@ -2,6 +2,7 @@ import { Routes, Route, Link, HashRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { Products } from './pages/Products';
+import Characters from './pages/Rick-morty';
 import Upload from './pages/Upload';
 import NotFound from './pages/NotFound';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -35,6 +36,14 @@ function App(): React.JSX.Element {
           element={
             <PrivateRoute>
               <Products />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/rick-morty"
+          element={
+            <PrivateRoute>
+              <Characters />
             </PrivateRoute>
           }
         />

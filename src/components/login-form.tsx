@@ -39,8 +39,7 @@ export function LoginForm({
     // Call login action from store
     login(data.email, mockToken)
 
-    // Redirect to products page
-    navigate("/products")
+    navigate("/")
   }
 
   return (
