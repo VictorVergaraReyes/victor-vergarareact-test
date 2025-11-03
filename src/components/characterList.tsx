@@ -13,6 +13,7 @@ function CharacterList() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('all');
+  const [sortBy, setSortBy] = useState('id');
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -35,9 +36,24 @@ function CharacterList() {
     }
   };
 
-  const filteredCharacters = characters.filter(char =>
-    char.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredCharacters = characters
+    .filter(char => char.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'id':
+          return a.id - b.id;
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'species':
+          return a.species.localeCompare(b.species);
+        case 'gender':
+          return a.gender.localeCompare(b.gender);
+        case 'created':
+          return new Date(a.created).getTime() - new Date(b.created).getTime();
+        default:
+          return 0;
+      }
+    });
 
   return (
     <div className="container mx-auto p-6 space-y-6">
@@ -58,6 +74,18 @@ function CharacterList() {
             <SelectItem value="alive">Vivos</SelectItem>
             <SelectItem value="dead">Muertos</SelectItem>
             <SelectItem value="unknown">Desconocido</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-full md:w-[180px]">
+            <SelectValue placeholder="Ordenar por" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="id">ID</SelectItem>
+            <SelectItem value="name">Nombre</SelectItem>
+            <SelectItem value="species">Especie</SelectItem>
+            <SelectItem value="gender">Género</SelectItem>
+            <SelectItem value="created">Creado</SelectItem>
           </SelectContent>
         </Select>
       </div>
