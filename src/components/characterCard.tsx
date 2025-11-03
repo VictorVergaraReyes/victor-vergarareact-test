@@ -2,9 +2,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Character } from "@/types/rickMortyTypes";
 
-function CharacterCard({ character }) {
-  const getStatusColor = (status) => {
+
+function CharacterCard({ character}: { character: Character }) {
+  const getStatusColor = (status:string) => {
     switch(status.toLowerCase()) {
       case 'alive': return 'bg-green-500';
       case 'dead': return 'bg-red-500';

@@ -17,7 +17,6 @@ function App(): React.JSX.Element {
           </Link>
         </div>
       </nav>
-
       {/* Rutas */}
       <Routes>
         <Route path="/" element={<Home />} />
