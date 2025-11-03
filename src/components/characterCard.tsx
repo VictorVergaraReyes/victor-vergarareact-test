@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Character } from "@/types/rickMortyTypes";
+import CharacterDialog from "./characterDialog";
 
 
 function CharacterCard({ character}: { character: Character }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const getStatusColor = (status:string) => {
     switch(status.toLowerCase()) {
       case 'alive': return 'bg-green-500';
@@ -45,10 +48,16 @@ function CharacterCard({ character}: { character: Character }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" onClick={() => setDialogOpen(true)}>
           Ver detalles
         </Button>
       </CardFooter>
+
+      <CharacterDialog
+        character={character}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </Card>
   );
 }
