@@ -86,11 +86,26 @@ export function LoginForm({
                 <Input
                   id="password"
                   type="password"
+                  onPaste={(e) => e.preventDefault()}
                   {...register("password", {
                     required: "La contraseña es requerida",
                     minLength: {
                       value: 6,
                       message: "La contraseña debe tener al menos 6 caracteres"
+                    },
+                    maxLength: {
+                      value: 12,
+                      message: "La contraseña debe tener máximo 12 caracteres"
+                    },
+                    validate: {
+                      hasUppercase: (value) =>
+                        /[A-Z]/.test(value) || "Debe contener al menos una letra mayúscula",
+                      hasLowercase: (value) =>
+                        /[a-z]/.test(value) || "Debe contener al menos una letra minúscula",
+                      hasNumber: (value) =>
+                        /\d/.test(value) || "Debe contener al menos un número",
+                      hasSpecialChar: (value) =>
+                        /[!@#$%^&*(),.?":{}|<>]/.test(value) || "Debe contener al menos un carácter especial"
                     }
                   })}
                 />
@@ -103,6 +118,7 @@ export function LoginForm({
                 <Input
                   id="confirmPassword"
                   type="password"
+                  onPaste={(e) => e.preventDefault()}
                   {...register("confirmPassword", {
                     required: "Por favor confirma tu contraseña",
                     validate: (value, formValues) =>
