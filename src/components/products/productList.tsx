@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Product } from '@/types/productTypes';
+import { fetchProducts as fetchProductsApi } from '@/services/fakeProduct';
 
 function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -14,17 +15,16 @@ function ProductList() {
   const [sortBy, setSortBy] = useState('id');
 
   useEffect(() => {
-    fetchProducts();
+    loadProducts();
   }, []);
 
-  const fetchProducts = async () => {
+  const loadProducts = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
+      const data = await fetchProductsApi();
       setProducts(data);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error loading products:', error);
     } finally {
       setLoading(false);
     }

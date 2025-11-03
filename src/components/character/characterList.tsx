@@ -5,7 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink } from "@/components/ui/pagination";
-import { Character } from '@/types/rickMortyTypes';  
+import { Character } from '@/types/rickMortyTypes';
+import { fetchCharacters as fetchCharactersApi } from '@/services/rickAndMortyApi';
 
 
 function CharacterList() {
@@ -17,20 +18,16 @@ function CharacterList() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchCharacters();
+    loadCharacters();
   }, [page, status]);
 
-  const fetchCharacters = async () => {
+  const loadCharacters = async () => {
     setLoading(true);
     try {
-      const statusQuery = status !== 'all' ? `&status=${status}` : '';
-      const response = await fetch(
-        `https://rickandmortyapi.com/api/character?page=${page}${statusQuery}`
-      );
-      const data = await response.json();
-      setCharacters(data.results);
+      const data = await fetchCharactersApi({ page, status });
+      setCharacters(data);
     } catch (error) {
-      console.error('Error fetching characters:', error);
+      console.error('Error loading characters:', error);
     } finally {
       setLoading(false);
     }

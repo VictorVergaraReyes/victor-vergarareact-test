@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { createProduct } from "@/services/fakeProduct";
 
 type ProductFormData = {
   titulo: string;
@@ -29,25 +30,14 @@ function ProductForm() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://fakestoreapi.com/products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: data.titulo,
-          price: parseFloat(data.precio),
-          description: data.descripcion,
-          image: data.imagen,
-          category: 'general'
-        })
+      const result = await createProduct({
+        title: data.titulo,
+        price: parseFloat(data.precio),
+        description: data.descripcion,
+        image: data.imagen,
+        category: 'general'
       });
 
-      if (!response.ok) {
-        throw new Error('Error al crear el producto');
-      }
-
-      const result = await response.json();
       console.log("Producto creado:", result);
       toast.success('Producto creado exitosamente', {
         description: `ID del producto: ${result.id}`
