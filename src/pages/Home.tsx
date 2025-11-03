@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Upload as UploadIcon, LogOut, Users } from 'lucide-react';
+import { Package, Upload as UploadIcon, LogOut, Users, PlusCircle } from 'lucide-react';
 import { useAuthStore } from '@/stores/loginStore';
 import { Button } from '@/components/ui/button';
 
@@ -49,6 +49,12 @@ const Home = (): React.JSX.Element => {
       description: 'Ver y gestionar el catálogo de productos',
       icon: <Package size={28} />,
       path: '/products',
+    },
+    {
+      title: 'Crear Producto',
+      description: 'Agregar un nuevo producto al catálogo',
+      icon: <PlusCircle size={28} />,
+      path: '/create-product',
     },
     {
       title: 'Rick and Morty',
