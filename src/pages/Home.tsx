@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package, Upload as UploadIcon, LogIn, LogOut, Users } from 'lucide-react';
+import { Package, Upload as UploadIcon, LogOut, Users } from 'lucide-react';
 import { useAuthStore } from '@/stores/loginStore';
 import { Button } from '@/components/ui/button';
 
@@ -61,13 +61,7 @@ const Home = (): React.JSX.Element => {
       description: 'Cargar y administrar archivos',
       icon: <UploadIcon size={28} />,
       path: '/upload',
-    },
-    {
-      title: 'Iniciar Sesión',
-      description: 'Acceder a tu cuenta',
-      icon: <LogIn size={28} />,
-      path: '/login',
-    },
+    }
   ];
 
   return (
